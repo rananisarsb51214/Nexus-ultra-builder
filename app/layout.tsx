@@ -1,13 +1,13 @@
  { Metadata } from "next";
-{ Analytics } from "@vercel/analytics/next";
+next";
 ./globals.css";
 
-metadata: Metadata = {
+metadata: {
   title: "Nexus Ultra Builder",
   description: "Enterprise AI platform for responsive website creation, workflow automation, content generation, deployment, and team collaboration.",
 };
 
-default function RootLayout({
+default function
   children,
 }: Readonly<{
   children: React.ReactNode;
