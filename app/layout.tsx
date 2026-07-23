@@ -1,4 +1,4 @@
- { Metadata } from "next";
+from "next";
 next";
 ./globals.css";
 
@@ -9,7 +9,7 @@ metadata: {
 
 default function
   children,
-}: Readonly<{
+
   children: React.ReactNode;
 }>) {
   return (
