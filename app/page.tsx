@@ -1,5 +1,4 @@
-export default function Home() {
-  return (
+
     <div className="min-h-screen flex flex-col items-center justify-center p-8">
       <main className="flex flex-col gap-8 items-center max-w-4xl">
         <h1 className="text-5xl font-bold text-center">
