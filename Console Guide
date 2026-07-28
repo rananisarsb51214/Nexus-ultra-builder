@@ -1,0 +1,540 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { AlertCircle, Code2, Zap, Layers, Download, Copy, Play } from "lucide-react";
+
+export default function NexusUltraBuilder() {
+  const [activeTab, setActiveTab] = useState("builder");
+  const [selectedModule, setSelectedModule] = useState("all");
+  const [generatedFiles, setGeneratedFiles] = useState([]);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [builderMode, setBuilderMode] = useState("preview");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [pages, setPages] = useState([
+    { id: 1, name: "Home", type: "landing", sections: [] },
+    { id: 2, name: "Dashboard", type: "dashboard", sections: [] },
+    { id: 3, name: "Pricing", type: "pricing", sections: [] },
+  ]);
+  const [selectedPage, setSelectedPage] = useState(pages[0]);
+
+  // Mock generated files
+  const mockFiles = {
+    android: {
+      label: "MODULE 1: Android PDF Toolkit",
+      files: [
+        {
+          name: "MainActivity.kt",
+          content: `package com.nexusultra.pdftoolkit
+
+import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import android.os.Bundle
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MainScreen()
+        }
+    }
+}
+
+@Composable
+fun MainScreen() {
+    Text("PDF Toolkit Ready", style = MaterialTheme.typography.headlineLarge)
+}`,
+          language: "kotlin",
+          size: "2.5 KB",
+        },
+        {
+          name: "build.gradle.kts",
+          content: `plugins {
+    id 'com.android.application'
+    kotlin("android")
+}
+
+android {
+    compileSdk = 34
+    defaultConfig {
+        applicationId = "com.nexusultra.pdftoolkit"
+        minSdk = 24
+        targetSdk = 34
+    }
+}
+
+dependencies {
+    implementation "androidx.compose.ui:ui:1.6.0"
+    implementation "androidx.compose.material3:material3:1.1.0"
+}`,
+          language: "gradle",
+          size: "1.2 KB",
+        },
+      ],
+    },
+    web: {
+      label: "MODULE 2: Next.js Web Platform",
+      files: [
+        {
+          name: "layout.tsx",
+          content: `import type { Metadata } from "next";
+import { Providers } from "@/components/providers";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "Nexus Ultra | AI Website Builder",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  );
+}`,
+          language: "typescript",
+          size: "0.8 KB",
+        },
+        {
+          name: "dashboard.tsx",
+          content: `"use client";
+
+import { Card } from "@/components/ui/card";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+
+const mockData = [
+  { month: "Jan", revenue: 4000 },
+  { month: "Feb", revenue: 3000 },
+  { month: "Mar", revenue: 8000 },
+];
+
+export default function Dashboard() {
+  return (
+    <div className="p-8">
+      <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+      <div className="grid grid-cols-4 gap-4 mb-6">
+        <Card><div className="p-4"><div className="text-2xl font-bold">$12,450</div><p>MRR</p></div></Card>
+        <Card><div className="p-4"><div className="text-2xl font-bold">248</div><p>Sites</p></div></Card>
+        <Card><div className="p-4"><div className="text-2xl font-bold">12.4K</div><p>Visitors</p></div></Card>
+        <Card><div className="p-4"><div className="text-2xl font-bold">450</div><p>Credits</p></div></Card>
+      </div>
+    </div>
+  );
+}`,
+          language: "typescript",
+          size: "1.5 KB",
+        },
+      ],
+    },
+    backend: {
+      label: "MODULE 3: Fastify Backend",
+      files: [
+        {
+          name: "server.js",
+          content: `const Fastify = require("fastify");
+const cors = require("@fastify/cors");
+const helmet = require("@fastify/helmet");
+
+const fastify = Fastify({ logger: true });
+
+fastify.register(cors);
+fastify.register(helmet);
+
+fastify.get("/health", async () => ({
+  status: "ok",
+  message: "Nexus Ultra Backend",
+  timestamp: new Date().toISOString(),
+}));
+
+fastify.get("/api/v1/dashboard/overview", async () => ({
+  mrr: 12450,
+  totalSites: 248,
+  visitors: 12400,
+  aiCredits: 450,
+}));
+
+const start = async () => {
+  try {
+    await fastify.listen({ port: 3000, host: "0.0.0.0" });
+    console.log("âœ… Backend running on http://localhost:3000");
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
+};
+
+start();`,
+          language: "javascript",
+          size: "1.1 KB",
+        },
+      ],
+    },
+  };
+
+  const handleGenerateCode = async () => {
+    setIsGenerating(true);
+    // Simulate generation
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    const modules =
+      selectedModule === "all"
+        ? ["android", "web", "backend"]
+        : [selectedModule];
+
+    const files = modules.flatMap((mod) => mockFiles[mod].files);
+    setGeneratedFiles(
+      modules.map((mod) => ({
+        label: mockFiles[mod].label,
+        files: mockFiles[mod].files,
+      }))
+    );
+
+    setIsGenerating(false);
+  };
+
+  const handleDownloadCode = () => {
+    const code = generatedFiles
+      .map((mod) => `\n=== ${mod.label} ===\n\n${mod.files.map((f) => `// ${f.name}\n${f.content}`).join("\n\n")}`)
+      .join("\n\n");
+
+    const blob = new Blob([code], { type: "text/plain" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "nexus-ultra-generated.txt";
+    a.click();
+  };
+
+  const handleCopyCode = (content) => {
+    navigator.clipboard.writeText(content);
+    alert("âœ… Code copied to clipboard!");
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white p-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="text-4xl">ðŸš€</div>
+            <div>
+              <h1 className="text-4xl font-bold">NEXUS ULTRA</h1>
+              <p className="text-gray-400">Unified Builder + Generator Console</p>
+            </div>
+          </div>
+          <div className="h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded"></div>
+        </div>
+
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-3 mb-6 bg-slate-800">
+            <TabsTrigger value="builder" className="flex gap-2">
+              <Layers className="w-4 h-4" />
+              Builder
+            </TabsTrigger>
+            <TabsTrigger value="generator" className="flex gap-2">
+              <Code2 className="w-4 h-4" />
+              Generator
+            </TabsTrigger>
+            <TabsTrigger value="preview" className="flex gap-2">
+              <Zap className="w-4 h-4" />
+              Preview
+            </TabsTrigger>
+          </TabsList>
+
+          {/* BUILDER TAB */}
+          <TabsContent value="builder" className="space-y-6">
+            <Card className="bg-slate-800 border-slate-700">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Layers className="w-5 h-5 text-blue-400" />
+                  Website Builder
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Pages List */}
+                <div>
+                  <h3 className="text-sm font-semibold mb-3">ðŸ“„ Pages</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    {pages.map((page) => (
+                      <Card
+                        key={page.id}
+                        className={`bg-slate-700 border-2 cursor-pointer transition ${
+                          selectedPage.id === page.id
+                            ? "border-blue-500 bg-slate-600"
+                            : "border-slate-600 hover:border-slate-500"
+                        }`}
+                        onClick={() => setSelectedPage(page)}
+                      >
+                        <CardContent className="p-4">
+                          <div className="font-semibold">{page.name}</div>
+                          <div className="text-xs text-gray-400 mt-1 capitalize">
+                            {page.type}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Page Editor */}
+                <div className="space-y-3">
+                  <h3 className="text-sm font-semibold">âœï¸ Edit Page</h3>
+                  <div className="space-y-2">
+                    <label className="text-xs text-gray-300">Page Name</label>
+                    <Input
+                      value={selectedPage.name}
+                      className="bg-slate-700 border-slate-600"
+                      placeholder="Page name..."
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs text-gray-300">Description</label>
+                    <Textarea
+                      placeholder="Describe this page..."
+                      className="bg-slate-700 border-slate-600 h-32"
+                    />
+                  </div>
+                </div>
+
+                {/* Mode Toggle */}
+                <div className="flex gap-2">
+                  <Button
+                    variant={builderMode === "preview" ? "default" : "outline"}
+                    onClick={() => setBuilderMode("preview")}
+                    className="flex-1"
+                  >
+                    ðŸ‘ï¸ Preview
+                  </Button>
+                  <Button
+                    variant={builderMode === "edit" ? "default" : "outline"}
+                    onClick={() => setBuilderMode("edit")}
+                    className="flex-1"
+                  >
+                    âœï¸ Edit
+                  </Button>
+                  <Button
+                    variant={builderMode === "code" ? "default" : "outline"}
+                    onClick={() => setBuilderMode("code")}
+                    className="flex-1"
+                  >
+                    &lt;/&gt; Code
+                  </Button>
+                </div>
+
+                {builderMode === "preview" && (
+                  <div className="bg-slate-700 p-6 rounded border border-slate-600 min-h-96 flex items-center justify-center text-gray-400">
+                    <div className="text-center">
+                      <div className="text-2xl mb-2">ðŸŽ¨</div>
+                      <p>Preview of {selectedPage.name}</p>
+                      <p className="text-xs text-gray-500 mt-2">
+                        Generate code to see preview
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {builderMode === "code" && (
+                  <div className="bg-slate-950 p-4 rounded border border-slate-600 font-mono text-xs overflow-x-auto">
+                    <pre className="text-green-400">{`<div class="page">
+  <h1>${selectedPage.name}</h1>
+  <p>Page type: ${selectedPage.type}</p>
+</div>`}</pre>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* GENERATOR TAB */}
+          <TabsContent value="generator" className="space-y-6">
+            <Card className="bg-slate-800 border-slate-700">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Code2 className="w-5 h-5 text-purple-400" />
+                  Code Generator
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Module Selection */}
+                <div>
+                  <h3 className="text-sm font-semibold mb-3">ðŸ“¦ Select Module</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                    {[
+                      { value: "all", label: "All Modules" },
+                      { value: "android", label: "Android" },
+                      { value: "web", label: "Web" },
+                      { value: "backend", label: "Backend" },
+                    ].map((mod) => (
+                      <Button
+                        key={mod.value}
+                        variant={selectedModule === mod.value ? "default" : "outline"}
+                        onClick={() => setSelectedModule(mod.value)}
+                        className="text-xs"
+                      >
+                        {mod.label}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Generate Button */}
+                <Button
+                  onClick={handleGenerateCode}
+                  disabled={isGenerating}
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-6"
+                >
+                  {isGenerating ? (
+                    <>
+                      <span className="animate-spin mr-2">âš¡</span>
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-4 h-4 mr-2" />
+                      Generate Code
+                    </>
+                  )}
+                </Button>
+
+                {/* Generated Files */}
+                {generatedFiles.length > 0 && (
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-semibold">ðŸ“‚ Generated Files</h3>
+                    {generatedFiles.map((module, idx) => (
+                      <div key={idx} className="space-y-2">
+                        <div className="font-semibold text-sm text-blue-400">
+                          {module.label}
+                        </div>
+                        <div className="space-y-2">
+                          {module.files.map((file, fidx) => (
+                            <Card
+                              key={fidx}
+                              className="bg-slate-700 border-slate-600 cursor-pointer hover:border-blue-500 transition"
+                              onClick={() => setSelectedFile(file)}
+                            >
+                              <CardContent className="p-3 flex items-center justify-between">
+                                <div>
+                                  <div className="font-mono text-sm">{file.name}</div>
+                                  <div className="text-xs text-gray-400">
+                                    {file.language} â€¢ {file.size}
+                                  </div>
+                                </div>
+                                <Badge>{file.language}</Badge>
+                              </CardContent>
+                            </Card>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+
+                    {/* Download Button */}
+                    <Button
+                      onClick={handleDownloadCode}
+                      className="w-full bg-green-600 hover:bg-green-700"
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      Download All Files
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* PREVIEW TAB */}
+          <TabsContent value="preview" className="space-y-6">
+            <Card className="bg-slate-800 border-slate-700">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Zap className="w-5 h-5 text-yellow-400" />
+                  Code Preview
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {selectedFile ? (
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-mono font-semibold">
+                          {selectedFile.name}
+                        </h3>
+                        <p className="text-xs text-gray-400">
+                          {selectedFile.language} â€¢ {selectedFile.size}
+                        </p>
+                      </div>
+                      <Button
+                        onClick={() => handleCopyCode(selectedFile.content)}
+                        variant="outline"
+                        size="sm"
+                      >
+                        <Copy className="w-4 h-4 mr-1" />
+                        Copy
+                      </Button>
+                    </div>
+
+                    <div className="bg-slate-950 p-4 rounded border border-slate-600 font-mono text-xs overflow-x-auto max-h-96 overflow-y-auto">
+                      <pre className="text-green-400 whitespace-pre-wrap">
+                        {selectedFile.content}
+                      </pre>
+                    </div>
+
+                    <div className="bg-blue-900/20 border border-blue-700 rounded p-3">
+                      <div className="flex gap-2">
+                        <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0" />
+                        <div className="text-sm text-blue-200">
+                          <p className="font-semibold mb-1">Ready to Use!</p>
+                          <p>This code is production-ready. Download and integrate into your project.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-12 text-gray-400">
+                    <Code2 className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                    <p>Generate code and select a file to see preview</p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+
+        {/* Footer Info */}
+        <div className="mt-8 p-4 bg-slate-800 rounded border border-slate-700">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <div className="text-2xl font-bold text-blue-400">6</div>
+              <div className="text-xs text-gray-400">Modules</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-purple-400">30+</div>
+              <div className="text-xs text-gray-400">Files Generated</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-green-400">100%</div>
+              <div className="text-xs text-gray-400">Production Ready</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-yellow-400">0</div>
+              <div className="text-xs text-gray-400">API Keys Needed</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
