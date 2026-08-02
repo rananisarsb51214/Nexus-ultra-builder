@@ -1,0 +1,110 @@
+# 🚀 Nexus Ultra Builder
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rananisarsb51214-web/Nexus-ultra-builder/main/public/logo.png" alt="Nexus Ultra Builder Logo" width="180">
+</p>
+
+<p align="center">
+  <strong>Enterprise AI Platform for Building Websites, Apps, APIs, Dashboards & AI Agents</strong>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-16-black?logo=next.js">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react">
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript">
+  <img src="https://img.shields.io/badge/TailwindCSS-4-06B6D4?logo=tailwindcss">
+  <img src="https://img.shields.io/badge/License-MIT-green">
+</p>
+
+---
+
+# 📖 Overview
+
+Nexus Ultra Builder is a modern AI-powered development platform that generates production-ready software from natural language.
+
+## ✨ Features
+
+- 🌐 AI Website Builder
+- 📱 AI App Builder
+- 🤖 AI Agent Builder
+- ⚡ API Builder
+- 🗄 Database Builder
+- 📊 Dashboard Builder
+- 🔐 Authentication
+- ☁ One-Click Deployment
+- 🎨 Modern UI Components
+- 🔄 Workflow Automation
+
+---
+
+# 🛠 Tech Stack
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Node.js
+- Vercel
+- Supabase
+- Firebase
+- PostgreSQL
+- OpenAI
+- Claude
+- Gemini
+
+---
+
+# 📁 Project Structure
+
+```text
+app/
+components/
+lib/
+public/
+styles/
+prompts/
+agents/
+builders/
+docs/
+```
+
+---
+
+# 🚀 Installation
+
+```bash
+git clone https://github.com/rananisarsb51214-web/Nexus-ultra-builder.git
+
+cd Nexus-ultra-builder
+
+npm install
+
+npm run dev
+```
+
+---
+
+# ⚙ Environment Variables
+
+```env
+OPENAI_API_KEY=
+ANTHROPIC_API_KEY=
+GOOGLE_API_KEY=
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
+DATABASE_URL=
+```
+
+---
+
+# 📄 License
+
+MIT License © Nisar AI Studio
+
+---
+
+# ⭐ Support
+
+If you like this project, please give it a ⭐ on GitHub.
+
+Built with ❤️ by **Nisar AI Studio**
