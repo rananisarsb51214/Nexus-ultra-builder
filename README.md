@@ -1,153 +1,34 @@
-# Nexus Ultra Builder 🚀
+# Nexus Ultra Builder — Claude Skill Package
 
-Nexus Ultra Builder is an enterprise AI platform designed for responsive website creation, workflow automation, content generation, deployment, and team collaboration.
+This folder contains a production-ready Claude Skill package for Nexus Ultra Builder (Nisar AI Studio). It consolidates and adapts existing repository documentation into a single enterprise knowledge base suitable for upload to Claude Skills.
 
-[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Stars](https://img.shields.io/github/stars/rananisarsb51214-web/Nexus-ultra-builder.svg?style=flat-square)](https://github.com/rananisarsb51214-web/Nexus-ultra-builder/stargazers)
-[![Forks](https://img.shields.io/github/forks/rananisarsb51214-web/Nexus-ultra-builder.svg?style=flat-square)](https://github.com/rananisarsb51214-web/Nexus-ultra-builder/forks)
+Contents
 
-## ✨ Table of Contents
+- SKILL.md — Master Skill prompt and runtime rules
+- README.md — This file (overview & quickstart)
+- COMPANY.md — Company profile and contact
+- ARCHITECTURE.md — System architecture (consolidated from Architecture.md)
+- AGENTS.md — Agent definitions and responsibilities
+- WORKFLOWS.md — Workflow orchestrations and diagrams
+- API_REGISTRY.md — API design standards and examples
+- PROMPTS.md — Canonical prompts and examples
+- CODING_STANDARDS.md — Coding and testing standards
+- DEPLOYMENT.md — Deployment & CI/CD guide
+- ROADMAP.md — Product roadmap
+- BRAND.md — Brand assets, colors and typography
 
-- [About the Project](#-about-the-project)
-- [Key Features](#-key-features)
-- [Tech Stack](#-tech-stack)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [Project Structure](#-project-structure)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Contact](#-contact)
+Quickstart
 
-## 🚀 About the Project
+1. Review COMPANY.md and BRAND.md to ensure brand assets and website URL are correct.
+2. Upload this folder to Claude Skills as a new Skill package.
+3. Use SKILL.md as the master prompt/instruction set.
+4. Test with example prompts in PROMPTS.md; adjust AGENTS.md if you add new tools.
 
-Nexus Ultra Builder is an enterprise-grade AI platform that streamlines the entire website development lifecycle. It empowers teams to build responsive websites efficiently, automate complex workflows, generate high-quality content, and deploy seamlessly, all within a collaborative environment.
+Notes on reuse
 
-## ✨ Key Features
+This package reuses and consolidates existing documentation from the repository's Architecture.md, Master_Guide.md, Console Guide and README.md. File references and source sections are included in each document.
 
-- **AI-Powered Website Creation:** Leverage artificial intelligence to design and build responsive websites with ease.
-- **Workflow Automation:** Automate repetitive tasks and streamline development processes.
-- **Content Generation:** Utilize AI to generate engaging and relevant content for your websites.
-- **Seamless Deployment:** Deploy your projects efficiently with integrated deployment tools.
-- **Team Collaboration:** Foster collaboration among team members with a centralized platform.
+Contact
 
-## 🛠️ Tech Stack
-
-- **Frontend:** React, Next.js, Tailwind CSS
-- **Backend:** Node.js, Express
-- **Language:** TypeScript
-- **Deployment:** Vercel Analytics
-
-## 🏁 Installation
-
-### Prerequisites
-
-- Node.js (v18.0.0 or higher recommended)
-- npm or yarn
-
-### Steps
-
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/rananisarsb51214-web/Nexus-ultra-builder.git
-    cd Nexus-ultra-builder
-    ```
-
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    # or
-    yarn install
-    ```
-
-3.  **Set up environment variables (if applicable):**
-    The project may use environment variables. Look for a `.env.example` file and create a `.env` file by copying it. Populate the `.env` file with your specific configurations.
-    ```bash
-    cp .env.example .env
-    # Edit .env with your values
-    ```
-
-## 💡 Usage
-
-### Development Server
-
-To start the development server, run:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-This command will build and serve the application in development mode, typically accessible at `http://localhost:3000`.
-
-### Production Build
-
-To create an optimized production build, run:
-
-```bash
-npm run build
-# or
-yarn build
-```
-
-This command prepares the application for deployment.
-
-### Running the Production Build
-
-After building, you can start the production server with:
-
-```bash
-npm run start
-# or
-yarn start
-```
-
-**Note:** Actual usage examples would depend on the specific functionalities implemented in the codebase, which were not fully analyzed. The provided code focuses on the basic structure and landing page.
-
-## 📂 Project Structure
-
-```
-nexus-ultra-builder/
-├── public/
-├── app/
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
-├── .eslintrc.json
-├── next.config.ts
-├── package.json
-├── postcss.config.mjs
-├── README.md
-├── tailwind.config.ts
-└── tsconfig.json
-```
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1.  Fork the Project
-2.  Create your Feature Branch (`git checkout -b feature/YourFeature`)
-3.  Commit your Changes (`git commit -m 'Add some YourFeature'`)
-4.  Push to the Branch (`git push origin feature/YourFeature`)
-5.  Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## 📫 Contact
-
-Rana Nisar Ali Shah - [@rananisarsb51214](https://github.com/rananisarsb51214) - rananisarsb51214@gmail.com
-
-## 🔗 Important Links
-
-- **Repository:** [https://github.com/rananisarsb51214-web/Nexus-ultra-builder](https://github.com/rananisarsb51214-web/Nexus-ultra-builder)
-
----
-
-© 2024 [Nexus Ultra Builder](https://github.com/rananisarsb51214-web/Nexus-ultra-builder). All rights reserved.
-
-
----
-**<p align="center">Generated by [ReadmeCodeGen](https://www.readmecodegen.com/)</p>**
+Nisar AI Studio — Nexus Ultra Builder
+Website (temporary): https://github.com/rananisarsb51214/Nexus-ultra-builder
