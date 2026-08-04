@@ -1,4 +1,12 @@
-name: NodeJS with Webpack
+export default function Page() {
+  return (
+    <div className="min-h-screen ...">
+      <main className="...">
+        {/* content */}
+      </main>
+    </div>
+  );
+}: NodeJS with Webpack
 
 on:
   push:
